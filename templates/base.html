@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Key Management</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 60px;
+            transition: background-color 0.5s, color 0.5s;
+        }
+        .scan-progress {
+            color: #ffffff;
+            margin-right: 15px;
+        }
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        body.dark-mode .navbar, body.dark-mode .navbar-nav .nav-link {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+        /* Circular Toggle Switch */
+        .switch {
+            position: fixed;
+            top: 50%; /* Changed from 20px to 50% */
+            left: 20px; /* Changed from 50% to 20px to place it all the way to the left */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transform: translate(-50%, -50%); /* Added to center the switch */
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .switch label {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #f4f4f4;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #f00;
+            transition: background-color 0.4s;
+        }
+
+        /* Sun Icon */
+        .switch label svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.4s ease;
+        }
+
+        input:checked + label {
+            background-color: #333;
+        }
+
+        /* Transform sun icon into moon (dark mode) */
+        input:checked + label svg {
+            transform: rotate(180deg);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Light/Dark Mode Toggle Switch -->
+    <div class="switch">
+        <input type="checkbox" id="modeSwitch">
+        <label for="modeSwitch">
+            <!-- Sun/Moon Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-8.66h-1m-16 0h-1m15.54-5.36l-.71-.71M5.36 18.64l-.71-.71m13.36-.71l-.71.71M5.36 5.36l-.71.71M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </label>
+    </div>
+
+    <!-- Navbar -->
+    {% if session.get('admin_logged_in') %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="{{ url_for('dashboard') }}">API Key Management</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item{% if request.endpoint == 'dashboard' %} active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item{% if request.endpoint == 'api_keys_page' %} active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('api_keys_page') }}">API Keys</a>
+                </li>
+                <li class="nav-item{% if request.endpoint == 'admins_page' %} active{% endif %}">
+                    <a class="nav-link" href="{{ url_for('admins_page') }}">Admins</a>
+                </li>
+                <li class="nav-item{% if request.endpoint == 'users_page' %} active{% endif %}"> <!-- New link for Users -->
+                    <a class="nav-link" href="{{ url_for('users_page') }}">Users</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <span class="navbar-text scan-progress" id="scanProgress">Loading scan progress...</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logoutBtn">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+    
+    <!-- Content -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- Dark Mode Script -->
+    <script>
+        const modeSwitch = document.getElementById('modeSwitch');
+        const body = document.body;
+
+        // Check for saved preference and apply
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            modeSwitch.checked = true;
+        }
+
+        // Toggle dark mode
+        modeSwitch.addEventListener('change', function () {
+            if (this.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+
+    <script>
+        // Fetch scan progress data and update the navbar
+        function fetchScanProgress() {
+            $.ajax({
+                url: '/api/scan_progress',
+                method: 'GET',
+                success: function(data) {
+                    let progressText = data.map(coinData => 
+                        `${coinData.coin}: ${coinData.percent_done}` // Removed wallet count
+                    ).join(' | ');
+                    
+                    $('#scanProgress').text(progressText);
+                },
+                error: function() {
+                    $('#scanProgress').text('Failed to load scan progress');
+                }
+            });
+        }
+
+        // Call the function on page load and set an interval for periodic updates
+        $(document).ready(function() {
+            fetchScanProgress();
+            setInterval(fetchScanProgress, 10000); // Update every 10 seconds
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

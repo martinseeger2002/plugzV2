@@ -1,0 +1,146 @@
+2024-11-09 20:00:09,635 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:09,642 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:09,642 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:09,642 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:09,642 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:00:09,642 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:00:09,643 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:00:09,643 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:00:09,643 INFO:Scheduler started
+2024-11-09 20:00:09,643 INFO:Scheduler started with all jobs scheduled.
+2024-11-09 20:00:09,643 INFO:Running job "run_rc001_indexer (trigger: date[2024-11-09 20:00:09 CST], next run at: 2024-11-09 20:00:09 CST)" (scheduled at 2024-11-09 20:00:09.635625-06:00)
+2024-11-09 20:00:09,648 INFO:Removed job run_rc001_indexer
+2024-11-09 20:00:31,723 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:31,730 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:31,730 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:31,730 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:31,730 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:00:31,731 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:00:31,731 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:00:31,731 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:00:31,731 INFO:Scheduler started
+2024-11-09 20:00:31,731 INFO:Scheduler started with all jobs scheduled.
+2024-11-09 20:00:31,731 INFO:Running job "run_rc001_indexer (trigger: date[2024-11-09 20:00:31 CST], next run at: 2024-11-09 20:00:31 CST)" (scheduled at 2024-11-09 20:00:31.723618-06:00)
+2024-11-09 20:00:31,737 INFO:Removed job run_rc001_indexer
+2024-11-09 20:00:31,749 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5051
+2024-11-09 20:00:31,749 INFO:[33mPress CTRL+C to quit[0m
+2024-11-09 20:00:53,142 ERROR:An error occurred while running rc001indexer.py: Command '['python3', 'rc001indexer.py']' died with <Signals.SIGINT: 2>.
+2024-11-09 20:00:53,143 INFO:Job "run_rc001_indexer (trigger: date[2024-11-09 20:00:31 CST], next run at: 2024-11-09 20:00:31 CST)" executed successfully
+2024-11-09 20:00:53,143 INFO:Scheduler has been shut down
+2024-11-09 20:00:58,821 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:58,829 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:58,829 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:58,829 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:00:58,829 INFO:Scheduler started with all jobs scheduled.
+2024-11-09 20:00:58,840 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:00:58,840 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:00:58,840 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:00:58,840 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:00:58,840 INFO:Scheduler started
+2024-11-09 20:00:58,840 INFO:Running job "run_rc001_indexer (trigger: date[2024-11-09 20:00:58 CST], next run at: 2024-11-09 20:00:58 CST)" (scheduled at 2024-11-09 20:00:58.821757-06:00)
+2024-11-09 20:00:58,841 INFO:Removed job run_rc001_indexer
+2024-11-09 20:00:58,846 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5051
+2024-11-09 20:00:58,846 INFO:[33mPress CTRL+C to quit[0m
+2024-11-09 20:01:00,000 INFO:Running job "run_credit_bot (trigger: cron[minute='*'], next run at: 2024-11-09 20:01:00 CST)" (scheduled at 2024-11-09 20:01:00-06:00)
+2024-11-09 20:01:10,122 INFO:Credit bot scripts executed successfully.
+2024-11-09 20:01:10,122 INFO:Job "run_credit_bot (trigger: cron[minute='*'], next run at: 2024-11-09 20:02:00 CST)" executed successfully
+2024-11-09 20:01:32,443 ERROR:An error occurred while running rc001indexer.py: Command '['python3', 'rc001indexer.py']' died with <Signals.SIGINT: 2>.
+2024-11-09 20:01:32,443 INFO:Job "run_rc001_indexer (trigger: date[2024-11-09 20:00:58 CST], next run at: 2024-11-09 20:00:58 CST)" executed successfully
+2024-11-09 20:01:32,443 INFO:Scheduler has been shut down
+2024-11-09 20:01:33,842 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:01:33,849 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:01:33,849 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:01:33,849 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:01:33,849 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:01:33,849 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:01:33,849 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:01:33,849 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:01:33,849 INFO:Scheduler started
+2024-11-09 20:01:33,850 INFO:Scheduler started with all jobs scheduled.
+2024-11-09 20:01:33,850 INFO:Running job "run_rc001_indexer (trigger: date[2024-11-09 20:01:33 CST], next run at: 2024-11-09 20:01:33 CST)" (scheduled at 2024-11-09 20:01:33.842076-06:00)
+2024-11-09 20:01:33,855 INFO:Removed job run_rc001_indexer
+2024-11-09 20:03:15,927 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:03:15,933 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:03:15,934 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:03:15,934 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:03:15,945 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:03:15,945 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:03:15,945 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:03:15,945 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:03:15,945 INFO:Scheduler started
+2024-11-09 20:03:15,945 INFO:Scheduler started successfully.
+2024-11-09 20:03:15,945 INFO:Running job "run_rc001_indexer (trigger: date[2024-11-09 20:03:15 CST], next run at: 2024-11-09 20:03:15 CST)" (scheduled at 2024-11-09 20:03:15.927039-06:00)
+2024-11-09 20:03:15,946 INFO:Removed job run_rc001_indexer
+2024-11-09 20:03:15,952 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5051
+2024-11-09 20:03:15,952 INFO:[33mPress CTRL+C to quit[0m
+2024-11-09 20:04:00,000 INFO:Running job "run_credit_bot (trigger: cron[minute='*'], next run at: 2024-11-09 20:04:00 CST)" (scheduled at 2024-11-09 20:04:00-06:00)
+2024-11-09 20:04:10,161 INFO:Credit bot scripts executed successfully.
+2024-11-09 20:04:10,161 INFO:Job "run_credit_bot (trigger: cron[minute='*'], next run at: 2024-11-09 20:05:00 CST)" executed successfully
+2024-11-09 20:04:53,891 ERROR:An error occurred while running rc001indexer.py: Command '['python3', 'rc001indexer.py']' died with <Signals.SIGINT: 2>.
+2024-11-09 20:04:53,891 INFO:Job "run_rc001_indexer (trigger: date[2024-11-09 20:03:15 CST], next run at: 2024-11-09 20:03:15 CST)" executed successfully
+2024-11-09 20:04:53,891 INFO:Scheduler has been shut down
+2024-11-09 20:04:53,891 INFO:Scheduler shut down successfully.
+2024-11-09 20:04:55,263 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:04:55,270 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:04:55,270 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:04:55,270 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:04:55,281 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:04:55,281 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:04:55,281 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:04:55,281 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:04:55,281 INFO:Scheduler started
+2024-11-09 20:04:55,282 INFO:Scheduler started successfully.
+2024-11-09 20:04:55,285 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5051
+2024-11-09 20:04:55,285 INFO:[33mPress CTRL+C to quit[0m
+2024-11-09 20:05:00,000 INFO:Running job "run_credit_bot (trigger: cron[minute='*'], next run at: 2024-11-09 20:05:00 CST)" (scheduled at 2024-11-09 20:05:00-06:00)
+2024-11-09 20:05:09,988 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:09,995 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:09,995 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:09,995 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:10,006 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:05:10,006 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:05:10,006 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:05:10,006 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:05:10,006 INFO:Scheduler started
+2024-11-09 20:05:10,010 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5051
+2024-11-09 20:05:10,010 INFO:[33mPress CTRL+C to quit[0m
+2024-11-09 20:05:11,092 INFO:Scheduler has been shut down
+2024-11-09 20:05:22,340 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:22,347 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:22,347 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:22,347 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:22,358 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:05:22,358 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:05:22,358 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:05:22,358 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:05:22,358 INFO:Scheduler started
+2024-11-09 20:05:22,359 INFO:Running job "run_rc001_indexer (trigger: date[2024-11-09 20:05:22 CST], next run at: 2024-11-09 20:05:22 CST)" (scheduled at 2024-11-09 20:05:22.340516-06:00)
+2024-11-09 20:05:22,359 INFO:Removed job run_rc001_indexer
+2024-11-09 20:05:22,365 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5051
+2024-11-09 20:05:22,365 INFO:[33mPress CTRL+C to quit[0m
+2024-11-09 20:05:24,037 ERROR:An error occurred while running rc001indexer.py: Command '['python3', 'rc001indexer.py']' died with <Signals.SIGINT: 2>.
+2024-11-09 20:05:24,037 INFO:Job "run_rc001_indexer (trigger: date[2024-11-09 20:05:22 CST], next run at: 2024-11-09 20:05:22 CST)" executed successfully
+2024-11-09 20:05:24,037 INFO:Scheduler has been shut down
+2024-11-09 20:05:29,528 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:29,535 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:29,535 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:29,535 INFO:Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-11-09 20:05:29,546 INFO:Added job "run_rc001_indexer" to job store "default"
+2024-11-09 20:05:29,546 INFO:Added job "trigger_blockchain_rescan" to job store "default"
+2024-11-09 20:05:29,546 INFO:Added job "reset_daily_request_counts" to job store "default"
+2024-11-09 20:05:29,546 INFO:Added job "run_credit_bot" to job store "default"
+2024-11-09 20:05:29,546 INFO:Scheduler started
+2024-11-09 20:05:29,547 INFO:Running job "run_rc001_indexer (trigger: date[2024-11-09 20:05:29 CST], next run at: 2024-11-09 20:05:29 CST)" (scheduled at 2024-11-09 20:05:29.528829-06:00)
+2024-11-09 20:05:29,547 INFO:Removed job run_rc001_indexer
+2024-11-09 20:05:29,553 INFO:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5051
+2024-11-09 20:05:29,553 INFO:[33mPress CTRL+C to quit[0m
+2024-11-09 20:05:32,152 ERROR:An error occurred while running rc001indexer.py: Command '['python3', 'rc001indexer.py']' died with <Signals.SIGINT: 2>.
+2024-11-09 20:05:32,152 INFO:Job "run_rc001_indexer (trigger: date[2024-11-09 20:05:29 CST], next run at: 2024-11-09 20:05:29 CST)" executed successfully
+2024-11-09 20:05:32,152 INFO:Scheduler has been shut down

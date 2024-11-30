@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1>Welcome, {{ session['admin_username'] }}!</h1>
+    <p class="lead">Use the navigation bar to manage API Keys and Admins.</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$('#logoutBtn').click(function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: '/logout',
+        type: 'POST',
+        success: function(response) {
+            window.location.href = '/login';
+        }
+    });
+});
+</script>
+{% endblock %}

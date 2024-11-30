@@ -1,0 +1,60 @@
+Here's a detailed list of the localStorage keys and the files in which they are used:
+1. selectedWalletLabel
+Files:
+static/ui/mintFileUI.js
+static/ui/mintImageUI.js
+static/ui/walletUI.js
+Purpose: Stores the label of the currently selected wallet to maintain the user's selection across sessions.
+
+2. wallets
+Files:
+static/ui/mintFileUI.js
+static/ui/mintImageUI.js
+static/ui/walletUI.js
+Purpose: Stores the list of wallets, including details like UTXOs and balance.
+
+3. pendingHexData
+Files:
+static/ui/imageCompressorUI.js
+static/ui/mintImageUI.js
+Purpose: Stores pending hex data, including MIME type and hex data for transactions.
+
+4. mintResponse
+Files:
+static/ui/mintFileUI.js
+static/ui/mintImageUI.js
+static/ui/inscribeUI.js
+Purpose: Contains the response from the mint API, including pending transactions.
+
+5. transactionHexes
+Files:
+static/ui/mintFileUI.js
+static/ui/mintImageUI.js
+Purpose: Stores a list of transaction hexes for tracking purposes.
+
+6. pendingUTXOs
+Files:
+static/ui/mintFileUI.js
+static/ui/mintImageUI.js
+Purpose: Stores UTXOs that are marked as pending to prevent reuse.
+
+7. fileToMint
+Files:
+static/ui/mintFileUI.js
+Purpose: Stores file data to be minted, including MIME type, hex, and receiving address.
+
+8. MyInscriptions
+Files:
+static/ui/inscribeUI.js
+static/ui/myInscriptionUI.js
+Purpose: Stores a list of user inscriptions, including names and transaction IDs.
+
+9. titleText
+Files:
+static/ui/landingPageUI.js
+Purpose: Stores the title text for the landing page to maintain consistency across sessions.
+
+10. titleColor
+Files:
+static/ui/landingPageUI.js
+Purpose: Stores the color of the title text for the landing page to maintain styling across sessions.

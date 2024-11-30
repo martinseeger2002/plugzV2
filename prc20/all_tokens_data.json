@@ -1,0 +1,112 @@
+{
+    "tokens": [
+        {
+            "tick": "feel",
+            "deploy_txid": "fc07371cca6eb6d90a9615a3d1d00cfa8e2c97ee136d18e639705f3317e8286c",
+            "deploy_address": "Po6y8f49WQZJ6adohQkkCKcJYdawLj5feh",
+            "max_supply": 1,
+            "limit_per_mint": 1,
+            "current_supply": 1,
+            "mint_percentage": 100.0
+        },
+        {
+            "tick": "toad",
+            "deploy_txid": "2c7635c4bdae10607f811fe4074c4a3d4151d5cb4b500a6281c051645146bd16",
+            "deploy_address": "Ps6ncazkhtvih2LfYYL369xC99PhqbTyFS",
+            "max_supply": 100000000,
+            "limit_per_mint": 1,
+            "current_supply": 0,
+            "mint_percentage": 0.0
+        },
+        {
+            "tick": "frog",
+            "deploy_txid": "b13d26a06e5bd0b78c120515888517ef0203e043b817409e2a4ec33691209be1",
+            "deploy_address": "PcRELd5oEfJSckkGntv2dJXEaeehsLs2sz",
+            "max_supply": 5000000000,
+            "limit_per_mint": 1000,
+            "current_supply": 4999999675,
+            "mint_percentage": 99.99999349999999
+        },
+        {
+            "tick": "fren",
+            "deploy_txid": "a3af9f7e8b454dc453799cfd34a66a9b7a5d96bcc8ae913014a07ac86daa51c1",
+            "deploy_address": "PqK9ZsawHNLKw1wPMxP4CTkNEsS8VdSjRu",
+            "max_supply": 694200000000000,
+            "limit_per_mint": 69420,
+            "current_supply": 25561560,
+            "mint_percentage": 3.682160760587727e-06
+        },
+        {
+            "tick": "pepi",
+            "deploy_txid": "692a8bb92712393d1faaa22bc522cd20f5f1869ad615a482e6a5004fd6ed78d1",
+            "deploy_address": "PoekLDbEWLfeXkZLv67vt5RXgubAnbDqQ9",
+            "max_supply": 21000000,
+            "limit_per_mint": 10,
+            "current_supply": 2930630,
+            "mint_percentage": 13.955380952380953
+        },
+        {
+            "tick": "king",
+            "deploy_txid": "7f7d6fe98580c303956b3744363908d8d35e60073fef92e540dd1f2b8d695530",
+            "deploy_address": "PkUcdgjQhQGm1sugp1UnpQfdTBiQe4jPcw",
+            "max_supply": 21000000,
+            "limit_per_mint": 1000,
+            "current_supply": 3026000,
+            "mint_percentage": 14.409523809523808
+        },
+        {
+            "tick": "ppay",
+            "deploy_txid": "f583b2bd406a031e8b8998644814bb6a47b0804d48233bd5bbda58b75f9fa638",
+            "deploy_address": "PvbtsNa9tqNa18F1tQHy4wKLj7w1PXv6yV",
+            "max_supply": 21000000000000,
+            "limit_per_mint": 100,
+            "current_supply": 900000,
+            "mint_percentage": 4.2857142857142855e-06
+        },
+        {
+            "tick": "rbit",
+            "deploy_txid": "7dac357abd904b919ecea96a1d2c51fd28cc5e57d5c9f753a9c42381802d7b6b",
+            "deploy_address": "PcmLvj8povVm8s6qFtMQBRwQa95nvVKpXZ",
+            "max_supply": 21000000,
+            "limit_per_mint": 1000,
+            "current_supply": 21000000,
+            "mint_percentage": 100.0
+        },
+        {
+            "tick": "pepe",
+            "deploy_txid": "36275b58c73f2ea6aba4441e5c5f5b911471a3a04652341171d2ffbd63d4b2d0",
+            "deploy_address": "Pv6JUU4WNiAc3FKvADx88AVcuMmftuQwBD",
+            "max_supply": 100000000,
+            "limit_per_mint": 1,
+            "current_supply": 66039,
+            "mint_percentage": 0.066039
+        },
+        {
+            "tick": "lord",
+            "deploy_txid": "6316281cccc1c95295aa7301b4f3a890f7e7d535a9e07f8511a3dc8ff20fff1b",
+            "deploy_address": "Prc1FXBZsLbGo6MGPyWxatL2QpySDwoko3",
+            "max_supply": 69,
+            "limit_per_mint": 1,
+            "current_supply": 69,
+            "mint_percentage": 100.0
+        },
+        {
+            "tick": "good",
+            "deploy_txid": "78025fb749c92f2a2299b8e5492c55e550e42b67bef6fc63c5f6e28e88876b15",
+            "deploy_address": "Po6y8f49WQZJ6adohQkkCKcJYdawLj5feh",
+            "max_supply": 1,
+            "limit_per_mint": 1,
+            "current_supply": 1,
+            "mint_percentage": 100.0
+        },
+        {
+            "tick": "kaer",
+            "deploy_txid": "096d4655db395ba05ab71f9d08d5ee2104d3dc7bad0dc74141c94abacc1f7b90",
+            "deploy_address": "PYAUjgwqVSwN3ZpozNu8FehAfCRqEVdGqY",
+            "max_supply": 21000000,
+            "limit_per_mint": 100,
+            "current_supply": 307600,
+            "mint_percentage": 1.4647619047619047
+        }
+    ]
+}

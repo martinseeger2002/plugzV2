@@ -1,0 +1,28 @@
+{
+  "name": "getOrdTxsLTC",
+  "version": "1.0.0",
+  "description": "A minter and protocol for inscriptions on Dogecoin",
+  "main": "getOrdTxsLTC.js",
+  "author": "apezord",
+  "license": "MIT",
+  "bin": {
+    "getOrdTxsLTC": "getOrdTxsLTC.js"
+  },
+  "scripts": {
+    "generateKey": "node generateKey.js"
+  },
+  "dependencies": {
+    "axios": "^1.3.4",
+    "bitcoinjs-lib": "^7.0.0-rc.0",
+    "bitcore-lib-doge": "^8.25.46",
+    "bitcore-lib-ltc": "^10.5.3",
+    "dotenv": "^16.0.3",
+    "ecpair": "^3.0.0-rc.0",
+    "elliptic": "^6.5.7",
+    "express": "^4.18.2",
+    "litecore-lib": "^0.13.22",
+    "lodash": "^4.17.21",
+    "mime-types": "^2.1.35",
+    "tiny-secp256k1": "^2.2.3"
+  }
+}

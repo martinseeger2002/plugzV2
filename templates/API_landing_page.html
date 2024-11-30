@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Official documentation for the Blockchainplugz API Beta, providing endpoints and instructions for interacting with blockchain networks like LKY, DOGE, and LTC.">
+    <meta name="keywords" content="Blockchainplugz, API, documentation, blockchain, LKY, DOGE, LTC, Bitcoin, Ethereum, API endpoints, API keys, API testing">
+    <meta name="author" content="Blockchainplugz">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchainplugz API Beta Documentation</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        h1, h2, h3 {
+            transition: color 0.5s;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .endpoint {
+            margin-top: 40px;
+        }
+
+        .back-to-top {
+            margin-top: 20px;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+
+        body.dark-mode code, body.dark-mode pre {
+            background-color: #333;
+        }
+
+        body.dark-mode h1 {
+            color: #fff;
+        }
+
+        body.dark-mode h2 {
+            color: #ddd;
+        }
+
+        body.dark-mode h3 {
+            color: #ccc;
+        }
+
+        /* Circular Toggle Switch */
+        .switch {
+            position: fixed;
+            top: 20px;
+            right: 20px; /* Changed from left to right */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .switch label {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #f4f4f4;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #f00;
+            transition: background-color 0.4s;
+        }
+
+        /* Sun Icon */
+        .switch label svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.4s ease;
+        }
+
+        input:checked + label {
+            background-color: #333;
+        }
+
+        /* Transform sun icon into moon (dark mode) */
+        input:checked + label svg {
+            transform: rotate(180deg);
+        }
+
+        .switch-label {
+            font-size: 16px;
+            color: #333;
+            transition: color 0.5s;
+        }
+
+        /* Dark mode label color */
+        body.dark-mode .switch-label {
+            color: #f4f4f4;
+        }
+
+        /* Back to Top Link */
+        .back-to-top a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        .back-to-top a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Light/Dark Mode Toggle Switch -->
+    <div class="switch">
+        <input type="checkbox" id="modeSwitch">
+        <label for="modeSwitch">
+            <!-- Sun/Moon Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path id="iconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-8.66h-1m-16 0h-1m15.54-5.36l-.71-.71M5.36 18.64l-.71-.71m13.36-.71l-.71.71M5.36 5.36l-.71.71M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </label>
+    </div>
+    <h1>Blockchainplugz API Beta Documentation</h1>
+
+    <p>Welcome to the Blockchainplugz API Beta documentation. This API allows you to interact with various blockchain networks, such as LKY, DOGE, and LTC, to retrieve information about blocks, transactions, addresses, and to broadcast transactions.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="#authentication">API Key Authentication</a></li>
+        <li><a href="#general-errors">General Errors</a></li>
+        <li>
+            <a href="#endpoints">API Endpoints</a>
+            <ul>
+                <li><a href="#get_address_balance">1. Get Address Balance</a></li>
+                <li><a href="#get_transaction_details">2. Get Transaction Details</a></li>
+                <li><a href="#get_block_details">3. Get Block Details</a></li>
+                <li><a href="#send_raw_transaction">4. Send Raw Transaction</a></li>
+                <li><a href="#estimate_fee">5. Estimate Fee</a></li>
+                <li><a href="#get_unspent_transactions">6. Get Unspent Transactions</a></li>
+                <li><a href="#get_address_transactions">7. Get Address Transactions</a></li>
+                <li><a href="#get_transaction_counts">8. Get Transaction Counts</a></li>
+                <li><a href="#get_address_summary">9. Get Address Summary</a></li>
+                <li><a href="#validate_address">10. Validate Address</a></li>
+                <li><a href="#get_latest_blocks_summary">11. Get Latest Blocks Summary</a></li>
+                <li><a href="#get_best_block_hash">12. Get Best Block Hash</a></li>
+                <li><a href="#get_price">13. Get Price</a></li>
+                <li><a href="#get_network_info">14. Get Network Info</a></li>
+                <li><a href="#get_account_info">15. Get Account Info</a></li>
+                <li><a href="#get_sig_script_asm">16. Get Signature Script ASM</a></li>
+                <li><a href="#get_witness_script_asm">17. Get Witness Script ASM</a></li>
+                <li><a href="#decode_raw_transaction">18. Decode Raw Transaction</a></li>
+                <li><a href="#ord_check">19. Ord Check</a></li>
+                <li><a href="#mint">20. Mint</a></li>
+                <li><a href="#sms">21. SMS</a></li>
+                <li><a href="#import_address">22. Import Address Without Rescan</a></li>
+                <li><a href="#send_tx">23. Send Transaction</a></li>
+                <li><a href="#get_ord_content">24. Get Ordinal Content</a></li>
+                <li><a href="#get_new_address_and_privkey">25. Get New Address and Private Key</a></li>
+                <li><a href="#generate_new_address_and_privkey">26. Generate New Address and Private Key</a></li>
+                <li><a href="#generate_tx_hex">27. Generate Transaction Hex</a></li>
+            </ul>
+        </li>
+        <li><a href="#api-tester">API Tester</a></li>
+    </ul>
+
+    <h2 id="authentication">API Key Authentication</h2>
+    <p>All API endpoints require an API key to be included in the request headers.</p>
+    <p>Include your API key in the <code>X-API-Key</code> header with each request.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code>curl -H "X-API-Key: your_api_key_here" http://blockchainplugz.com/api/v1/get_address_balance/LTC/LTCaddress123</code></pre>
+    <div class="back-to-top"><a href="#top">Back to Top</a></div>
+
+    <h2 id="general-errors">General Errors</h2>
+    <p>All error responses will be returned in the following JSON format:</p>
+    <pre><code>{
+    "status": "error",
+    "message": "Error message detailing what went wrong"
+}</code></pre>
+    <div class="back-to-top"><a href="#top">Back to Top</a></div>
+
+    <h2 id="endpoints">API Endpoints</h2>
+
+    <!-- Endpoint 1: Get Address Balance -->
+    <div class="endpoint" id="get_address_balance">
+        <h3>1. Get Address Balance</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_address_balance/&lt;ticker&gt;/&lt;address&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the confirmed and unconfirmed balance for a given blockchain address.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>address</code> (string): The address to query.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_address_balance/LKY/LKYaddress123</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "network": "LKY",
+        "address": "LKYaddress123",
+        "confirmed_balance": "1.234",
+        "unconfirmed_balance": "0.123"
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 2: Get Transaction Details -->
+    <div class="endpoint" id="get_transaction_details">
+        <h3>2. Get Transaction Details</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_tx/&lt;ticker&gt;/&lt;txid&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves detailed information about a specific transaction.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>txid</code> (string): The transaction ID (hash) of the transaction.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_tx/LTC/abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx1234yzab5678cdef9012</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "network": "LTC",
+        "txid": "abcd1234...",
+        "block_no": "blockhash1234...",
+        "confirmations": 12,
+        "time": 1609459200,
+        "inputs": [
+            {"txid": "prevtxid1", "vout": 0},
+            {"txid": "prevtxid2", "vout": 1}
+        ],
+        "outputs": [
+            {"index": 0, "address": "LTCaddress1", "value": "0.5", "script_hex": "76a914..."},
+            {"index": 1, "address": "LTCaddress2", "value": "0.3", "script_hex": "76a914..."}
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 3: Get Block Details -->
+    <div class="endpoint" id="get_block_details">
+        <h3>3. Get Block Details</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_block/&lt;ticker&gt;/&lt;block_hash_or_height&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves detailed information about a specific block.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>block_hash_or_height</code> (string or integer): The block hash or height.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_block/LKY/100000</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "network": "LKY",
+        "block_no": 100000,
+        "hash": "blockhash1234...",
+        "time": 1609459200,
+        "txs": [
+            "txid1",
+            "txid2",
+            "txid3"
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 4: Send Raw Transaction -->
+    <div class="endpoint" id="send_raw_transaction">
+        <h3>4. Send Raw Transaction</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/send_raw_tx/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Broadcasts a raw transaction to the blockchain network.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "tx_hex": "raw_transaction_hex_string"
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/send_raw_tx/LKY
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "tx_hex": "0100000001abcdef..."
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txid": "transaction_id"
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 5: Estimate Fee -->
+    <div class="endpoint" id="estimate_fee">
+        <h3>5. Estimate Fee</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/estimate_fee/&lt;ticker&gt;/&lt;target&gt;</code></p>
+        <p><strong>Description:</strong> Estimates the fee rate for a transaction to be confirmed within the target number of blocks.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>target</code> (integer): The desired number of blocks for confirmation.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Official documentation for the Blockchainplugz API Beta, providing endpoints and instructions for interacting with blockchain networks like LKY, DOGE, and LTC.">
+    <meta name="keywords" content="Blockchainplugz, API, documentation, blockchain, LKY, DOGE, LTC, Bitcoin, Ethereum, API endpoints, API keys, API testing">
+    <meta name="author" content="Blockchainplugz">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchainplugz API Beta Documentation</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        h1, h2, h3 {
+            transition: color 0.5s;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .endpoint {
+            margin-top: 40px;
+        }
+
+        .back-to-top {
+            margin-top: 20px;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+
+        body.dark-mode code, body.dark-mode pre {
+            background-color: #333;
+        }
+
+        body.dark-mode h1 {
+            color: #fff;
+        }
+
+        body.dark-mode h2 {
+            color: #ddd;
+        }
+
+        body.dark-mode h3 {
+            color: #ccc;
+        }
+
+        /* Circular Toggle Switch */
+        .switch {
+            position: fixed;
+            top: 20px;
+            right: 20px; /* Changed from left to right */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .switch label {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: #f4f4f4;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #f00;
+            transition: background-color 0.4s;
+        }
+
+        /* Sun Icon */
+        .switch label svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.4s ease;
+        }
+
+        input:checked + label {
+            background-color: #333;
+        }
+
+        /* Transform sun icon into moon (dark mode) */
+        input:checked + label svg {
+            transform: rotate(180deg);
+        }
+
+        .switch-label {
+            font-size: 16px;
+            color: #333;
+            transition: color 0.5s;
+        }
+
+        /* Dark mode label color */
+        body.dark-mode .switch-label {
+            color: #f4f4f4;
+        }
+
+        /* Back to Top Link */
+        .back-to-top a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        .back-to-top a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Light/Dark Mode Toggle Switch -->
+    <div class="switch">
+        <input type="checkbox" id="modeSwitch">
+        <label for="modeSwitch">
+            <!-- Sun/Moon Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-8.66h-1m-16 0h-1m15.54-5.36l-.71-.71M5.36 18.64l-.71-.71m13.36-.71l-.71.71M5.36 5.36l-.71.71M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+        </label>
+    </div>
+
+    <h1>Blockchainplugz API Beta Documentation</h1>
+
+    <p>Welcome to the Blockchainplugz API Beta documentation. This API allows you to interact with various blockchain networks, such as LKY, DOGE, and LTC, to retrieve information about blocks, transactions, addresses, and to broadcast transactions.</p>
+
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="#authentication">API Key Authentication</a></li>
+        <li><a href="#general-errors">General Errors</a></li>
+        <li>
+            <a href="#endpoints">API Endpoints</a>
+            <ul>
+                <li><a href="#get_address_balance">1. Get Address Balance</a></li>
+                <li><a href="#get_transaction_details">2. Get Transaction Details</a></li>
+                <li><a href="#get_block_details">3. Get Block Details</a></li>
+                <li><a href="#send_raw_transaction">4. Send Raw Transaction</a></li>
+                <li><a href="#estimate_fee">5. Estimate Fee</a></li>
+                <li><a href="#get_unspent_transactions">6. Get Unspent Transactions</a></li>
+                <li><a href="#get_address_transactions">7. Get Address Transactions</a></li>
+                <li><a href="#get_transaction_counts">8. Get Transaction Counts</a></li>
+                <li><a href="#get_address_summary">9. Get Address Summary</a></li>
+                <li><a href="#validate_address">10. Validate Address</a></li>
+                <li><a href="#get_latest_blocks_summary">11. Get Latest Blocks Summary</a></li>
+                <li><a href="#get_best_block_hash">12. Get Best Block Hash</a></li>
+                <li><a href="#get_price">13. Get Price</a></li>
+                <li><a href="#get_network_info">14. Get Network Info</a></li>
+                <li><a href="#get_account_info">15. Get Account Info</a></li>
+                <li><a href="#get_sig_script_asm">16. Get Signature Script ASM</a></li>
+                <li><a href="#get_witness_script_asm">17. Get Witness Script ASM</a></li>
+                <li><a href="#decode_raw_transaction">18. Decode Raw Transaction</a></li>
+                <li><a href="#ord_check">19. Ord Check</a></li>
+                <li><a href="#mint">20. Mint</a></li>
+                <li><a href="#sms">21. SMS</a></li>
+                <li><a href="#import_address">22. Import Address Without Rescan</a></li>
+                <li><a href="#send_tx">23. Send Transaction</a></li>
+                <li><a href="#get_ord_content">24. Get Ordinal Content</a></li>
+                <li><a href="#get_new_address_and_privkey">25. Get New Address and Private Key</a></li>
+                <li><a href="#generate_new_address_and_privkey">26. Generate New Address and Private Key</a></li>
+                <li><a href="#generate_tx_hex">27. Generate Transaction Hex</a></li>
+            </ul>
+        </li>
+        <li><a href="#api-tester">API Tester</a></li>
+    </ul>
+
+    <h2 id="authentication">API Key Authentication</h2>
+    <p>All API endpoints require an API key to be included in the request headers.</p>
+    <p>Include your API key in the <code>X-API-Key</code> header with each request.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code>curl -H "X-API-Key: your_api_key_here" http://blockchainplugz.com/api/v1/get_address_balance/LTC/LTCaddress123</code></pre>
+    <div class="back-to-top"><a href="#top">Back to Top</a></div>
+
+    <h2 id="general-errors">General Errors</h2>
+    <p>All error responses will be returned in the following JSON format:</p>
+    <pre><code>{
+    "status": "error",
+    "message": "Error message detailing what went wrong"
+}</code></pre>
+    <div class="back-to-top"><a href="#top">Back to Top</a></div>
+
+    <h2 id="endpoints">API Endpoints</h2>
+
+    <!-- Endpoint 1: Get Address Balance -->
+    <div class="endpoint" id="get_address_balance">
+        <h3>1. Get Address Balance</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_address_balance/&lt;ticker&gt;/&lt;address&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the confirmed and unconfirmed balance for a given blockchain address.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>address</code> (string): The address to query.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_address_balance/LKY/LKYaddress123</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "network": "LKY",
+        "address": "LKYaddress123",
+        "confirmed_balance": "1.234",
+        "unconfirmed_balance": "0.123"
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 2: Get Transaction Details -->
+    <div class="endpoint" id="get_transaction_details">
+        <h3>2. Get Transaction Details</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_tx/&lt;ticker&gt;/&lt;txid&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves detailed information about a specific transaction.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>txid</code> (string): The transaction ID (hash) of the transaction.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_tx/LTC/abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx1234yzab5678cdef9012</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "network": "LTC",
+        "txid": "abcd1234...",
+        "block_no": "blockhash1234...",
+        "confirmations": 12,
+        "time": 1609459200,
+        "inputs": [
+            {"txid": "prevtxid1", "vout": 0},
+            {"txid": "prevtxid2", "vout": 1}
+        ],
+        "outputs": [
+            {"index": 0, "address": "LTCaddress1", "value": "0.5", "script_hex": "76a914..."},
+            {"index": 1, "address": "LTCaddress2", "value": "0.3", "script_hex": "76a914..."}
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 3: Get Block Details -->
+    <div class="endpoint" id="get_block_details">
+        <h3>3. Get Block Details</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_block/&lt;ticker&gt;/&lt;block_hash_or_height&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves detailed information about a specific block.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>block_hash_or_height</code> (string or integer): The block hash or height.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_block/LKY/100000</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "network": "LKY",
+        "block_no": 100000,
+        "hash": "blockhash1234...",
+        "time": 1609459200,
+        "txs": [
+            "txid1",
+            "txid2",
+            "txid3"
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 4: Send Raw Transaction -->
+    <div class="endpoint" id="send_raw_transaction">
+        <h3>4. Send Raw Transaction</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/send_raw_tx/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Broadcasts a raw transaction to the blockchain network.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "tx_hex": "raw_transaction_hex_string"
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/send_raw_tx/LKY
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "tx_hex": "0100000001abcdef..."
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txid": "transaction_id"
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 5: Estimate Fee -->
+    <div class="endpoint" id="estimate_fee">
+        <h3>5. Estimate Fee</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/estimate_fee/&lt;ticker&gt;/&lt;target&gt;</code></p>
+        <p><strong>Description:</strong> Estimates the fee rate for a transaction to be confirmed within the target number of blocks.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>target</code> (integer): The desired number of blocks for confirmation.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/estimate_fee/LTC/6</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "fee_per_byte": 50,
+        "target": 6
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 6: Get Unspent Transactions -->
+    <div class="endpoint" id="get_unspent_transactions">
+        <h3>6. Get Unspent Transactions</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_tx_unspent/&lt;ticker&gt;/&lt;address&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves all unspent transaction outputs (UTXOs) for a given address.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>address</code> (string): The address to query.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_tx_unspent/LKY/LKYaddress123</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "network": "LKY",
+        "address": "LKYaddress123",
+        "txs": [
+            {
+                "txid": "txid1",
+                "output_no": 0,
+                "script_hex": "76a914...",
+                "value": 0.5,
+                "confirmations": 10
+            },
+            {
+                "txid": "txid2",
+                "output_no": 1,
+                "script_hex": "76a914...",
+                "value": 0.3,
+                "confirmations": 5
+            }
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 7: Get Address Transactions -->
+    <div class="endpoint" id="get_address_transactions">
+        <h3>7. Get Address Transactions</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/transactions/&lt;ticker&gt;/&lt;address&gt;/&lt;page&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves paginated transaction history for a given address, including details of whether the transaction was sent or received, and the involved addresses.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>address</code> (string): The address to query.</li>
+            <li><code>page</code> (integer): The page number (starting from 1).</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/transactions/LKY/LKYaddress123/1</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "transactions": [
+            {
+                "hash": "txid1",
+                "value": 0.5,
+                "time": 1609459200,
+                "block": 100000,
+                "confirmations": 12,
+                "from": ["address1", "address2"],
+                "to": ["LKYaddress123"],
+                "type": "receive"
+            },
+            {
+                "hash": "txid2",
+                "value": 0.3,
+                "time": 1609462800,
+                "block": 100010,
+                "confirmations": 8,
+                "from": ["LKYaddress123"],
+                "to": ["address3"],
+                "type": "send"
+            }
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 8: Get Transaction Counts -->
+    <div class="endpoint" id="get_transaction_counts">
+        <h3>8. Get Transaction Counts</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/transaction_counts/&lt;ticker&gt;/&lt;address&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the number of transactions for a given address.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>address</code> (string): The address to query.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/transaction_counts/LTC/LTCaddress123</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "sent": 5,
+        "received": 7,
+        "total": 12
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 9: Get Address Summary -->
+    <div class="endpoint" id="get_address_summary">
+        <h3>9. Get Address Summary</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/address_summary/&lt;ticker&gt;/&lt;address&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves a summary of information for a given address.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>address</code> (string): The address to query.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/address_summary/DOGE/DOGEaddress123</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txs_sent": 5,
+        "txs_received": 7,
+        "txs_total": 12,
+        "confirmed_balance": "1.5",
+        "unconfirmed_balance": "0",
+        "confirmed_received": "2.0"
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 10: Validate Address -->
+    <div class="endpoint" id="validate_address">
+        <h3>10. Validate Address</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/is_valid_address/&lt;ticker&gt;/&lt;address&gt;</code></p>
+        <p><strong>Description:</strong> Checks if a given address is valid.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>address</code> (string): The address to validate.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/is_valid_address/LKY/LKYaddress123</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "is_valid": true
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 11: Get Latest Blocks Summary -->
+    <div class="endpoint" id="get_latest_blocks_summary">
+        <h3>11. Get Latest Blocks Summary</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/latest_blocks_summary/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves a summary of the latest blocks.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/latest_blocks_summary/LKY</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "blocks": [
+            {
+                "height": 100000,
+                "miner": "Unknown",
+                "time": 1609459200,
+                "num_txs": 100,
+                "difficulty": 1234567.89,
+                "size": 123456,
+                "weight": 400000,
+                "version": 536870912,
+                "reward_and_fees": "N/A",
+                "price": {
+                    "value": "N/A",
+                    "currency": "USD"
+                }
+            },
+            {
+                "height": 99999,
+                "miner": "Unknown",
+                "time": 1609455600,
+                "num_txs": 95,
+                "difficulty": 1234500.00,
+                "size": 123400,
+                "weight": 400000,
+                "version": 536870912,
+                "reward_and_fees": "N/A",
+                "price": {
+                    "value": "N/A",
+                    "currency": "USD"
+                }
+            }
+            // Additional blocks...
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 12: Get Best Block Hash -->
+    <div class="endpoint" id="get_best_block_hash">
+        <h3>12. Get Best Block Hash</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/best_block_hash/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the hash of the best (latest) block in the chain.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/best_block_hash/LTC</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "hash": "bestblockhash1234..."
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 13: Get Price -->
+    <div class="endpoint" id="get_price">
+        <h3>13. Get Price</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/price/&lt;ticker&gt;</code> or <code>GET /api/v1/price/&lt;ticker&gt;/&lt;unix_timestamp&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the current price or historical price at a specific timestamp.</p>
+        <p><strong>Note:</strong> Historical price retrieval may not be implemented and will return the current price.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>unix_timestamp</code> (integer): UNIX timestamp for historical price.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/price/LKY</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "value": "0.25",
+        "currency": "USD",
+        "last_updated": 1609459200000
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 14: Get Network Info -->
+    <div class="endpoint" id="get_network_info">
+        <h3>14. Get Network Info</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/network_info/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves general information about the state of the blockchain network.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/network_info/LKY</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "block_count": 100000,
+        "best_block_hash": "bestblockhash1234...",
+        "hashrate": "N/A",
+        "mempool": {
+            "mempool_txs": 50,
+            "mempool_size": 123456,
+            "updated_at": 1609459200
+        }
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 15: Get Account Info -->
+    <div class="endpoint" id="get_account_info">
+        <h3>15. Get Account Info</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/account_info</code></p>
+        <p><strong>Description:</strong> Retrieves information about the account associated with the API key.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/account_info</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "last_login_at": 1609459200,
+    "plan": {
+        "name": "default",
+        "max_daily_requests": 1000,
+        "current_period_ends_at": 1612137600,
+        "will_renew_at_period_end": true
+    },
+    "num_requests_used": {
+        "today": 50,
+        "yesterday": 75
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 16: Get Signature Script ASM -->
+    <div class="endpoint" id="get_sig_script_asm">
+        <h3>16. Get Signature Script ASM</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_sig_script_asm/&lt;ticker&gt;/&lt;txid&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the signature script in assembly (ASM) format for each input of a given transaction ID.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>txid</code> (string): The transaction ID (hash) of the transaction.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_sig_script_asm/LTC/abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx1234yzab5678cdef9012</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txid": "abcd1234...",
+        "sig_scripts_asm": [
+            "3045022100... 0220...",
+            "3045022100... 0220..."
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 17: Get Witness Script ASM -->
+    <div class="endpoint" id="get_witness_script_asm">
+        <h3>17. Get Witness Script ASM</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_witness_script_asm/&lt;ticker&gt;/&lt;txid&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the witness script in assembly (ASM) format for each input of a given transaction ID.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+            <li><code>txid</code> (string): The transaction ID (hash) of the transaction.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_witness_script_asm/LTC/abcd1234efgh5678ijkl9012mnop3456qrst7890uvwx1234yzab5678cdef9012</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txid": "abcd1234...",
+        "witness_scripts_asm": [
+            "3045022100... 0220...",
+            "3045022100... 0220..."
+        ]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 18: Decode Raw Transaction -->
+    <div class="endpoint" id="decode_raw_transaction">
+        <h3>18. Decode Raw Transaction</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/decoderawtransaction/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Decodes a raw transaction hex string into a human-readable JSON object.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "hexstring": "raw_transaction_hex_string"
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/decoderawtransaction/LTC
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "hexstring": "0100000001abcdef..."
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txid": "transaction_id",
+        "version": 1,
+        "locktime": 0,
+        "vin": [...],
+        "vout": [...]
+    }
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 19: Ord Check -->
+    <div class="endpoint" id="ord_check">
+        <h3>19. Ord Check</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/ord_check/&lt;coin&gt;/&lt;txid&gt;/&lt;vout&gt;</code></p>
+        <p><strong>Description:</strong> Executes the ordCheck function with the specified coin, transaction ID, and output index (vout), returning the transaction details.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>coin</code> (string): The coin identifier (e.g., LKY, DOGE, LTC).</li>
+            <li><code>txid</code> (string): The transaction ID to check.</li>
+            <li><code>vout</code> (integer): The output index of the transaction.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/ord_check/LKY/03e059c8ecff996531399c9096635376fefbbe7e14ac835bf904f71364c5b97d/0</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txid": "03e059c8ecff996531399c9096635376fefbbe7e14ac835bf904f71364c5b97d",
+        "type": "ord",
+        "genesis_txid": "03e059c8ecff996531399c9096635376fefbbe7e14ac835bf904f71364c5b97d",
+        "sms_txid": null,
+        "child_txid": null,
+        "timestamp": "2024-10-17 04:14:40"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "Failed to process the transaction."
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 20: Mint -->
+    <div class="endpoint" id="mint">
+        <h3>20. Mint</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/mint</code></p>
+        <p><strong>Description:</strong> Executes a mint command to create a transaction with specified parameters.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <ul>
+            <li><code>receiving_address</code> (string): The address to receive the minted asset.</li>
+            <li><code>meme_type</code> (string): The MIME type of the data.</li>
+            <li><code>hex_data</code> (string): The data in hexadecimal format.</li>
+            <li><code>sending_address</code> (string): The address sending the transaction.</li>
+            <li><code>privkey</code> (string): The private key for signing the transaction.</li>
+            <li><code>utxo</code> (string): The UTXO being spent.</li>
+            <li><code>vout</code> (integer): The output index of the UTXO.</li>
+            <li><code>script_hex</code> (string): The script in hexadecimal format.</li>
+            <li><code>utxo_amount</code> (number): The amount of the UTXO.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/mint
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "receiving_address": "DCHxodkza1234567898uH6NKynmntmCNz",
+    "meme_type": "text/plain",
+    "hex_data": "68656c6c6f20776f726c64",
+    "sending_address": "DDcp7k2e1234567890y6EyARhso2Cj",
+    "privkey": "QSibKVvvbS123456789012346789ACLH2k2Hm5XYxqBXQYB",
+    "utxo": "f338df94d917689e452022ffba548fe477e65dec17ac26fa1ab8a5d84b7cb895",
+    "vout": 0,
+    "script_hex": "76a9145cfef1b93f42326958015c4f1abddbd719c63c3a88ac",
+    "utxo_amount": 421085548
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "output": "Final transaction: b3efdc72f2361d596ec211e01a5a765c57f2ea72dc290ee22d2ed6caba1c49e1\n{...}"
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 21: SMS -->
+    <div class="endpoint" id="sms">
+        <h3>21. SMS</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/sms/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Executes the SMS function with the specified parameters to create a transaction.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., DOGE, LKY, LTC).</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "receiving_address": "string",
+    "meme_type": "string",
+    "hex_data": "string",
+    "sending_address": "string",
+    "privkey": "string",
+    "utxo": "string",
+    "vout": integer,
+    "script_hex": "string",
+    "utxo_amount": number
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/sms/LKY
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "receiving_address": "DCHxodk12345678940ynmntmCNz",
+    "meme_type": "text/plain",
+    "hex_data": "68656c6c6f20776f726c64",
+    "sending_address": "DDcp7k2e1234567890y6EyARhso2Cj",
+    "privkey": "QSibKVvvbS123456789012346789ACLH2k2Hm5XYxqBXQYB",
+    "utxo": "f338df94d917689e452022ffba548fe477e65dec17ac26fa1ab8a5d84b7cb895",
+    "vout": 0,
+    "script_hex": "76a9145cfef1b93f42326958015c4f1abddbd719c63c3a88ac",
+    "utxo_amount": 421085548
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 22: Import Address Without Rescan -->
+    <div class="endpoint" id="import_address">
+        <h3>22. Import Address Without Rescan</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/import_address/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Imports a single Bitcoin address into your wallet without triggering a blockchain rescan.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "address": "your-bitcoin-address",
+    "label": "optional_label"
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/import_address/LTC
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "address": "1BoatSLRHtKNngkdXEeobR76b53LETtpyT",
+    "label": "ImportedAddress"
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "imported_address": "1BoatSLRHtKNngkdXEeobR76b53LETtpyT"
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 23: Send Transaction -->
+    <div class="endpoint" id="send_tx">
+        <h3>23. Send Transaction</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/send_tx/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Sends a transaction for the specified ticker. Currently, this operation is only available for the LKY ticker.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker. Only <code>LKY</code> is supported.</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "from_address": "string",
+    "privkey_wif": "string",
+    "recipient_address": "string",
+    "amount_to_send": number,
+    "dev_fee_base": number, // Optional, default is 0.0
+    "dev_fee_address": "string" // Optional
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/send_tx/LKY
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "from_address": "LKYsenderAddress",
+    "privkey_wif": "senderWIF",
+    "recipient_address": "LKYrecipientAddress",
+    "amount_to_send": 1.1,
+    "dev_fee_base": 0.0,
+    "dev_fee_address": "devFeeAddress"
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txid": "transaction_id"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "This operation is only available for the LKY ticker."
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 24: Get Ordinal Content -->
+    <div class="endpoint" id="get_ord_content">
+        <h3>24. Get Ordinal Content</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_ord_content/&lt;ticker&gt;/&lt;genesis_txid&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the base64-encoded content of an ordinal transaction using the specified ticker and genesis transaction ID.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., DOGE, LKY, LTC).</li>
+            <li><code>genesis_txid</code> (string): The genesis transaction ID.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_ord_content/DOGE/ceec0df4fc9bc43287bee429ded31432c2fef8d16ece49e409ebac39fc7f6d64</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "base64_data": "base64_encoded_content_here"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "Failed to process the transaction."
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 25: Get New Address and Private Key -->
+    <div class="endpoint" id="get_new_address_and_privkey">
+        <h3>25. Get New Address and Private Key</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_new_address_and_privkey/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Generates a new address and retrieves its corresponding private key for the specified ticker. <strong>Warning:</strong> This will create a new address and private key in the core as spendable.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_new_address_and_privkey/LKY</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "new_address": "DB6pBStnzURw19BDT1scS7TnEpYT1szo7R",
+        "privkey": "QTqsuo8MkstZY35ooesQQRwVfX89DqeZrYSnVcErDnKTYCm9ynCo"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "Error message detailing what went wrong"
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 26: Generate New Address and Private Key -->
+    <div class="endpoint" id="generate_new_address_and_privkey">
+        <h3>26. Generate New Address and Private Key</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/generate_key/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Generates a new address and its corresponding private key for the specified ticker. It will not be imported into the core.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/generate_key/LKY</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "new_address": "GeneratedAddressHere",
+        "privkey": "GeneratedPrivateKeyHere"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "Error message detailing what went wrong"
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 27: Generate Transaction Hex -->
+    <li><a href="#api-tester">API Tester</a></li>
+
+
+
+    <h2 id="api-tester">API Tester</h2>
+   
+    <p>Try out the API endpoints using our <a href="/api_tester.html">API Tester</a> page.</p>
+    <div class="back-to-top"><a href="#top">Back to Top</a></div>
+</body>
+</html>
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 22: Import Address Without Rescan -->
+    <div class="endpoint" id="import_address">
+        <h3>22. Import Address Without Rescan</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/import_address/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Imports a single Bitcoin address into your wallet without triggering a blockchain rescan.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "address": "your-bitcoin-address",
+    "label": "optional_label"
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/import_address/LTC
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "address": "1BoatSLRHtKNngkdXEeobR76b53LETtpyT",
+    "label": "ImportedAddress"
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "imported_address": "1BoatSLRHtKNngkdXEeobR76b53LETtpyT"
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 23: Send Transaction -->
+    <div class="endpoint" id="send_tx">
+        <h3>23. Send Transaction</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/send_tx/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Sends a transaction for the specified ticker. Currently, this operation is only available for the LKY ticker.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker. Only <code>LKY</code> is supported.</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "from_address": "string",
+    "privkey_wif": "string",
+    "recipient_address": "string",
+    "amount_to_send": number,
+    "dev_fee_base": number, // Optional, default is 0.0
+    "dev_fee_address": "string" // Optional
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/send_tx/LKY
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "from_address": "LKYsenderAddress",
+    "privkey_wif": "senderWIF",
+    "recipient_address": "LKYrecipientAddress",
+    "amount_to_send": 1.1,
+    "dev_fee_base": 0.0,
+    "dev_fee_address": "devFeeAddress"
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "txid": "transaction_id"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "This operation is only available for the LKY ticker."
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 24: Get Ordinal Content -->
+    <div class="endpoint" id="get_ord_content">
+        <h3>24. Get Ordinal Content</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_ord_content/&lt;ticker&gt;/&lt;genesis_txid&gt;</code></p>
+        <p><strong>Description:</strong> Retrieves the base64-encoded content of an ordinal transaction using the specified ticker and genesis transaction ID.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., DOGE, LKY, LTC).</li>
+            <li><code>genesis_txid</code> (string): The genesis transaction ID.</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_ord_content/DOGE/ceec0df4fc9bc43287bee429ded31432c2fef8d16ece49e409ebac39fc7f6d64</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "base64_data": "base64_encoded_content_here"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "Failed to process the transaction."
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 25: Get New Address and Private Key -->
+    <div class="endpoint" id="get_new_address_and_privkey">
+        <h3>25. Get New Address and Private Key</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/get_new_address_and_privkey/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Generates a new address and retrieves its corresponding private key for the specified ticker. <strong>Warning:</strong> This will create a new address and private key in the core as spendable.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/get_new_address_and_privkey/LKY</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "new_address": "DB6pBStnzURw19BDT1scS7TnEpYT1szo7R",
+        "privkey": "QTqsuo8MkstZY35ooesQQRwVfX89DqeZrYSnVcErDnKTYCm9ynCo"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "Error message detailing what went wrong"
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 26: Generate New Address and Private Key -->
+    <div class="endpoint" id="generate_new_address_and_privkey">
+        <h3>26. Generate New Address and Private Key</h3>
+        <p><strong>Endpoint:</strong> <code>GET /api/v1/generate_key/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Generates a new address and its corresponding private key for the specified ticker. It will not be imported into the core.</p>
+        <p><strong>HTTP Method:</strong> GET</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>GET /api/v1/generate_key/LKY</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "new_address": "GeneratedAddressHere",
+        "privkey": "GeneratedPrivateKeyHere"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "Error message detailing what went wrong"
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <!-- Endpoint 27: Generate Transaction Hex -->
+    <div class="endpoint" id="generate_tx_hex">
+        <h3>27. Generate Transaction Hex</h3>
+        <p><strong>Endpoint:</strong> <code>POST /api/v1/generate_tx_hex/&lt;ticker&gt;</code></p>
+        <p><strong>Description:</strong> Generates a transaction hex string using specified UTXOs, vouts, wallet WIF private key, receiving addresses, and amounts.</p>
+        <p><strong>HTTP Method:</strong> POST</p>
+        <p><strong>Headers:</strong></p>
+        <ul>
+            <li><code>Content-Type</code>: <code>application/json</code></li>
+            <li><code>X-API-Key</code>: Your API key.</li>
+        </ul>
+        <p><strong>Path Parameters:</strong></p>
+        <ul>
+            <li><code>ticker</code> (string): The network ticker (e.g., LKY, DOGE, LTC).</li>
+        </ul>
+        <p><strong>Request Body:</strong></p>
+        <pre><code>{
+    "txId": "string",
+    "outputIndex": integer,
+    "address": "string",
+    "script": "string",
+    "satoshis": integer,
+    "privateKeyWIF": "string",
+    "receivingAddress1": "string",
+    "amount1": integer,
+    "receivingAddress2": "string",
+    "amount2": integer,
+    "fee": integer,
+    "changeAddress": "string"
+}</code></pre>
+        <p><strong>Example Request:</strong></p>
+        <pre><code>POST /api/v1/generate_tx_hex/LKY
+Content-Type: application/json
+X-API-Key: your_api_key_here
+
+{
+    "txId": "your-utxo-txid",
+    "outputIndex": 0,
+    "address": "your-address",
+    "script": "your-scriptPubKey",
+    "satoshis": 100000,
+    "privateKeyWIF": "your-private-key-wif",
+    "receivingAddress1": "receiving-address-1",
+    "amount1": 30000,
+    "receivingAddress2": "receiving-address-2",
+    "amount2": 20000,
+    "fee": 1000,
+    "changeAddress": "your-change-address"
+}</code></pre>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+    "status": "success",
+    "data": {
+        "transaction_hex": "generated_transaction_hex_here"
+    }
+}</code></pre>
+        <p><strong>Error Response:</strong></p>
+        <pre><code>{
+    "status": "error",
+    "message": "Error message detailing what went wrong"
+}</code></pre>
+        <div class="back-to-top"><a href="#top">Back to Top</a></div>
+    </div>
+
+    <script>
+        const modeSwitch = document.getElementById('modeSwitch');
+        const body = document.body;
+        const iconPath = document.getElementById('iconPath');
+
+        // Load saved mode from local storage
+        if (localStorage.getItem('dark-mode') === 'true') {
+            body.classList.add('dark-mode');
+            modeSwitch.checked = true;
+            iconPath.setAttribute('d', 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c4.41 0 8.19-2.84 9.5-6.75C19.5 16.5 16 14 12 14c-4.41 0-8 3.59-8 8 0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2 0-5.52-4.48-10-10-10z'); // Crescent moon path
+        }
+
+        modeSwitch.addEventListener('change', () => {
+            if (modeSwitch.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('dark-mode', 'true');
+                iconPath.setAttribute('d', 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c4.41 0 8.19-2.84 9.5-6.75C19.5 16.5 16 14 12 14c-4.41 0-8 3.59-8 8 0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2 0-5.52-4.48-10-10-10z'); // Crescent moon path
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('dark-mode', 'false');
+                iconPath.setAttribute('d', 'M12 3v1m0 16v1m8.66-8.66h-1m-16 0h-1m15.54-5.36l-.71-.71M5.36 18.64l-.71-.71m13.36-.71l-.71.71M5.36 5.36l-.71.71M15 12a3 3 0 11-6 0 3 3 0 016 0z'); // Sun path
+            }
+        });
+    </script>
+
+    <h2 id="api-tester">API Tester</h2>
+   
+    <p>Try out the API endpoints using our <a href="/api_tester.html">API Tester</a> page.</p>
+    <div class="back-to-top"><a href="#top">Back to Top</a></div>
+</body>
+</html>

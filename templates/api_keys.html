@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>API Keys</h2>
+<button class="btn btn-primary mb-3" data-toggle="modal" data-target="#apiKeyModal" id="addApiKeyBtn">Add API Key</button>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>API Key</th>
+            <th>Creation Date</th>
+            <th>Renewal Date</th>
+            <th>Last Login At</th>
+            <th>Plan Name</th>
+            <th>Max Daily Requests</th>
+            <th>Current Period Ends At</th>
+            <th>Will Renew At Period End</th>
+            <th>Number of Requests Today</th>
+            <th>Number of Requests Yesterday</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="apiKeysTable">
+        <!-- API keys will be loaded here -->
+    </tbody>
+</table>
+
+<!-- API Key Modal -->
+<div class="modal fade" id="apiKeyModal" tabindex="-1" aria-labelledby="apiKeyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add/Edit API Key</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>    
+            </div>
+            <div class="modal-body">
+                <form id="apiKeyForm">
+                    <input type="hidden" id="apiKeyUserId">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="userId">User ID</label>
+                            <input type="text" class="form-control" id="userId" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="apiKey">API Key</label>
+                            <input type="text" class="form-control" id="apiKey" required>
+                        </div>
+                    </div>
+                    <!-- Add more form fields as needed -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="creationDate">Creation Date</label>
+                            <input type="date" class="form-control" id="creationDate" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="renewalDate">Renewal Date</label>
+                            <input type="date" class="form-control" id="renewalDate" required>
+                        </div>
+                    </div>
+                    <!-- Continue adding fields for other attributes -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="lastLoginAt">Last Login At</label>
+                            <input type="datetime-local" class="form-control" id="lastLoginAt" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="planName">Plan Name</label>
+                            <input type="text" class="form-control" id="planName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="maxDailyRequests">Max Daily Requests</label>
+                            <input type="number" class="form-control" id="maxDailyRequests" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="currentPeriodEndsAt">Current Period Ends At</label>
+                            <input type="datetime-local" class="form-control" id="currentPeriodEndsAt" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="willRenewAtPeriodEnd">Will Renew At Period End</label>
+                            <input type="checkbox" class="form-control" id="willRenewAtPeriodEnd">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="numRequestsToday">Number of Requests Today</label>
+                            <input type="number" class="form-control" id="numRequestsToday" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="numRequestsYesterday">Number of Requests Yesterday</label>
+                            <input type="number" class="form-control" id="numRequestsYesterday" required>
+                        </div>
+                    </div>
+                    <!-- ... -->
+                    <button type="submit" class="btn btn-primary">Save API Key</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    loadApiKeys();
+
+    function loadApiKeys() {
+        $.ajax({
+            url: '/api/api_keys',
+            type: 'GET',
+            success: function(apiKeys) {
+                $('#apiKeysTable').empty();
+                apiKeys.forEach(function(apiKey) {
+                    let maskedApiKey = apiKey.api_key.replace(/./g, '*'); // Mask the API key with asterisks
+                    let row = `<tr>
+                        <td>${apiKey.user_id}</td>
+                        <td>${maskedApiKey}</td> <!-- Display masked API key -->
+                        <td>${apiKey.creation_date}</td>
+                        <td>${apiKey.renewal_date}</td>
+                        <td>${apiKey.last_login_at}</td>
+                        <td>${apiKey.plan_name}</td>
+                        <td>${apiKey.max_daily_requests}</td>
+                        <td>${apiKey.current_period_ends_at}</td>
+                        <td>${apiKey.will_renew_at_period_end ? 'Yes' : 'No'}</td>
+                        <td>${apiKey.num_requests_today}</td>
+                        <td>${apiKey.num_requests_yesterday}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning editApiKeyBtn" data-user-id="${apiKey.user_id}">Edit</button>
+                            <button class="btn btn-sm btn-danger deleteApiKeyBtn" data-user-id="${apiKey.user_id}">Delete</button>
+                        </td>
+                    </tr>`;
+                    $('#apiKeysTable').append(row);
+                });
+            }
+        });
+    }
+
+    $('#addApiKeyBtn').click(function() {
+        $('#apiKeyForm')[0].reset();
+        $('#apiKeyUserId').val('');
+        $('#userId').prop('disabled', false);
+        $('#apiKeyModal .modal-title').text('Add API Key');
+        
+        // Set all fields to required for adding
+        $('#apiKeyForm input').attr('required', true);
+    });
+
+    $('#apiKeysTable').on('click', '.editApiKeyBtn', function() {
+        let userId = $(this).data('user-id');
+        $.ajax({
+            url: `/api/api_keys/${userId}`,
+            type: 'GET',
+            success: function(apiKey) {
+                $('#apiKeyUserId').val(apiKey.user_id);
+                $('#userId').val(apiKey.user_id).prop('disabled', true);
+                $('#apiKey').val(apiKey.api_key);
+                $('#creationDate').val(apiKey.creation_date);
+                $('#renewalDate').val(apiKey.renewal_date);
+                $('#lastLoginAt').val(apiKey.last_login_at);
+                $('#planName').val(apiKey.plan_name);
+                $('#maxDailyRequests').val(apiKey.max_daily_requests);
+                $('#currentPeriodEndsAt').val(apiKey.current_period_ends_at);
+                $('#willRenewAtPeriodEnd').prop('checked', apiKey.will_renew_at_period_end);
+                $('#numRequestsToday').val(apiKey.num_requests_today);
+                $('#numRequestsYesterday').val(apiKey.num_requests_yesterday);
+
+                $('#apiKeyModal .modal-title').text('Edit API Key');
+                $('#apiKeyModal').modal('show');
+                
+                // Remove required attribute for editing
+                $('#apiKeyForm input').removeAttr('required');
+            }
+        });
+    });
+
+    $('#apiKeysTable').on('click', '.deleteApiKeyBtn', function() {
+        if (!confirm('Are you sure you want to delete this API Key?')) return;
+        let userId = $(this).data('user-id');
+        $.ajax({
+            url: `/api/api_keys/${userId}`,
+            type: 'DELETE',
+            success: function(response) {
+                loadApiKeys();
+            }
+        });
+    });
+
+    $('#apiKeyForm').submit(function(e) {
+        e.preventDefault();
+        let userId = $('#apiKeyUserId').val() || $('#userId').val();
+        let apiKeyData = {};
+
+        // Only add fields to apiKeyData if they have non-empty values
+        if ($('#userId').val().trim() !== '') apiKeyData.user_id = $('#userId').val().trim();
+        if ($('#apiKey').val().trim() !== '') apiKeyData.api_key = $('#apiKey').val().trim();
+        if ($('#creationDate').val().trim() !== '') apiKeyData.creation_date = $('#creationDate').val().trim();
+        if ($('#renewalDate').val().trim() !== '') apiKeyData.renewal_date = $('#renewalDate').val().trim();
+        if ($('#lastLoginAt').val().trim() !== '') apiKeyData.last_login_at = $('#lastLoginAt').val().trim();
+        if ($('#planName').val().trim() !== '') apiKeyData.plan_name = $('#planName').val().trim();
+        if ($('#maxDailyRequests').val().trim() !== '') apiKeyData.max_daily_requests = $('#maxDailyRequests').val().trim();
+        if ($('#currentPeriodEndsAt').val().trim() !== '') apiKeyData.current_period_ends_at = $('#currentPeriodEndsAt').val().trim();
+        apiKeyData.will_renew_at_period_end = $('#willRenewAtPeriodEnd').is(':checked');
+        if ($('#numRequestsToday').val().trim() !== '') apiKeyData.num_requests_today = $('#numRequestsToday').val().trim();
+        if ($('#numRequestsYesterday').val().trim() !== '') apiKeyData.num_requests_yesterday = $('#numRequestsYesterday').val().trim();
+
+        console.log('Sending data:', apiKeyData); // Debugging: log the data being sent
+
+        let method = $('#apiKeyUserId').val() ? 'PUT' : 'POST';
+        let url = method === 'PUT' ? `/api/api_keys/${userId}` : '/api/api_keys';
+        $.ajax({
+            url: url,
+            type: method,
+            contentType: 'application/json',
+            data: JSON.stringify(apiKeyData),
+            success: function(response) {
+                $('#apiKeyModal').modal('hide');
+                loadApiKeys();
+            },
+            error: function(xhr) {
+                alert(xhr.responseJSON.error);
+            }
+        });
+    });
+
+    $('#logoutBtn').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/logout',
+            type: 'POST',
+            success: function(response) {
+                window.location.href = '/login';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
